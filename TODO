@@ -1,0 +1,49 @@
+
+
+// shields
+enemies
+	type
+	pos x,y
+	dir x,y
+	life
+
+player
+	pos x,y
+	dir x,y
+	life
+
+bullets
+	pos x,y
+	dir x,y
+
+score
+
+nb_enemies
+
+
+//init_game();
+
+//init_enemies();
+//init_player();
+
+//draw_scene();
+
+//draw_enemies();
+//draw_player();
+//draw_bullets();
+
+//move_enemies();
+//move_player();
+//move_bullets();
+
+kill_enemy();
+kill_player();
+//kill_bullet();
+
+spawn_bullet();
+
+//enemies_colision();
+//player_colision();
+//bullet_colision();
+
+//free_game();
