@@ -6,7 +6,7 @@
 /*   By: tbailleu <tbailleu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/27 05:24:52 by tbailleu          #+#    #+#             */
-/*   Updated: 2022/08/27 18:17:28 by tbailleu         ###   ########.fr       */
+/*   Updated: 2022/08/27 18:48:40 by tbailleu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,8 @@ void	acquire_input(void)
 		rotate_player(g_game, KEY_LEFT);
 	if (key == KEY_RIGHT || key == 'd')
 		rotate_player(g_game, KEY_RIGHT);
-	// if (key == ' ')
-	if (key == 033)
-		g_gamestate = GAME_OVER;
+	if (key == ' ')
+		spawn_bullet(g_game, -1);
 	mvprintw(0, 0, "%d,", key);
 }
 
@@ -79,6 +78,7 @@ void	handle_tick(int sig)
 	}
 	else if (g_gamestate == GAME_LOOP)
 	{
+		enemies_attack(g_game);
 		move_bullets(g_game);
 		colision_bullets(g_game);
 		move_enemies(g_game);
@@ -88,14 +88,9 @@ void	handle_tick(int sig)
 		draw_scene(g_game);
 	}
 	else if (g_gamestate == GAME_PAUSED)
-	{
-		draw_scene(g_game);
-		draw_pause();
-	}
+		draw_pause(g_game);
 	else if (g_gamestate == GAME_OVER)
-	{
-		// print game over and restart option
-	}
+		draw_game_over(g_game);
 	else if (g_gamestate == GAME_EXIT)
 		exit(0);
 }

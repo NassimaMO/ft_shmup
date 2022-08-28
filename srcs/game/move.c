@@ -81,7 +81,7 @@ void	rotate_player(t_game *game, int dir)
 		game->player.dir_x = 1;
 }
 
-void	gen_enemy_dir(t_enemy *enemy)
+/*void	gen_enemy_dir(t_enemy *enemy)
 {
 	int	x;
 	int	tmp;
@@ -137,4 +137,4 @@ void	gen_enemy_dir(t_enemy *enemy)
 			enemy->dir_y = 0;
 		}
 	}
-}
+}*/

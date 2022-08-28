@@ -1,6 +1,6 @@
 NAME=		ft_shmup
 
-SRCS=		main init game/init game/free game/move game/colision game/kill game/draw
+SRCS=		main init game/init game/free game/move game/colision game/kill game/draw game/bullets
 
 DIR=		srcs
 $(NAME):	CFLAGS=-Wall -Wextra -I include -g3 \

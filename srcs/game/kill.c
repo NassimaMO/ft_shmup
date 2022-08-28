@@ -21,6 +21,7 @@ void	kill_bullet(t_game *game, t_bullet *bullet)
 	if (&next == &bullet)
 	{
 		tmp = next->next;
+		free(next);
 		game->bullets = tmp;
 		return ;
 	}
@@ -29,6 +30,7 @@ void	kill_bullet(t_game *game, t_bullet *bullet)
 		if (&next == &bullet)
 		{
 			tmp->next = next->next;
+			free(next);
 			return ;
 		}
 			tmp = next;

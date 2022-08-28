@@ -60,7 +60,7 @@ int enemy_colision(t_game *game, int enemy)
     return (0);
 }
 
-void colision_bullets(t_game *game)
+int colision_bullets(t_game *game)
 {
     t_bullet *next;
     int k;
@@ -72,6 +72,11 @@ void colision_bullets(t_game *game)
         if (k == 1)
         {
             game->player.lives--;
+            if (game->player.lives <= 0)
+            {
+                g_gamestate = GAME_OVER;
+                return (1);
+            }
             kill_bullet(game, next);
             next = game->bullets;
         }
@@ -101,9 +106,10 @@ void colision_bullets(t_game *game)
         else
             next = next->next;
     }
+    return (0);
 }
 
-void    colision_enemies(t_game *game)
+int    colision_enemies(t_game *game)
 {
     int i;
     int k;
@@ -113,7 +119,12 @@ void    colision_enemies(t_game *game)
     {
         k = enemy_colision(game, i);
         if (k == 1)
+        {
             game->player.lives = 0;
+            g_gamestate = GAME_OVER;
+            return (1);
+        }
         i++;
     }
+    return (0);
 }

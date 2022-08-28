@@ -6,7 +6,7 @@
 /*   By: tbailleu <tbailleu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/27 13:23:34 by tbailleu          #+#    #+#             */
-/*   Updated: 2022/08/27 18:20:14 by tbailleu         ###   ########.fr       */
+/*   Updated: 2022/08/27 19:11:15 by tbailleu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 # define OFFX ((COLS - MINSX) / 2)
 # define OFFY ((LINES - MINSY) / 2)
 
-static void	draw_enemy(t_game *game, t_enemy *enemy)
+static void	draw_enemy(t_enemy *enemy)
 {
 	chtype		c;
 
@@ -79,8 +79,8 @@ static void	draw_info(t_game *game)
 	if (g_gamestate == GAME_PAUSED)
 		mvprintw(OFFY + MINSY - 1, OFFX + 1, "Score: %.6d Time: *paused*",
 			game->score);
-	else
-		mvprintw(OFFY + MINSY - 1, OFFX + 1, "Score: %.6d Time: %.3lf",
+	else if (g_gamestate == GAME_OVER || g_gamestate == GAME_LOOP)
+		mvprintw(OFFY + MINSY - 1, OFFX + 1, "Score: %.6d Time: %.1lf",
 			game->score, tv.tv_sec - g_time_start.tv_sec
 			+ (tv.tv_usec - g_time_start.tv_usec) * 1e-6);
 }
@@ -93,19 +93,21 @@ void	draw_scene(t_game *game)
 	draw_info(game);
 	i = 0;
 	while (i < game->nb_enemies)
-		draw_enemy(game, &game->enemies[i++]);
+		draw_enemy(&game->enemies[i++]);
 	draw_player(game);
 	bullet = game->bullets;
 	while (bullet)
 	{
+		printf("1");
 		draw_bullet(game, bullet);
 		bullet = bullet->next;
 	}
 	refresh();
 }
 
-void	draw_pause(void)
+void	draw_pause(t_game *game)
 {
+	draw_scene(game);
 	mvprintw(OFFY + MINSY / 2 - 3, OFFX + MINSX / 2 - 9, "                  ");
 	mvprintw(OFFY + MINSY / 2 - 2, OFFX + MINSX / 2 - 9, "                  ");
 	mvprintw(OFFY + MINSY / 2 - 1, OFFX + MINSX / 2 - 9, "                  ");
@@ -122,4 +124,24 @@ void	draw_pause(void)
 	mvvline(OFFY + MINSY / 2 - 1, OFFX + MINSX / 2 - 8, ACS_VLINE, 3);
 	mvvline(OFFY + MINSY / 2 - 1, OFFX + MINSX / 2 + 7, ACS_VLINE, 3);
 	refresh();
+}
+
+void	draw_game_over(t_game *game)
+{
+	draw_info(game);
+	mvprintw(OFFY + MINSY / 2 - 3, OFFX + MINSX / 2 - 9, "                  ");
+	mvprintw(OFFY + MINSY / 2 - 2, OFFX + MINSX / 2 - 9, "                  ");
+	mvprintw(OFFY + MINSY / 2 - 1, OFFX + MINSX / 2 - 9, "     GAMEOVER     ");
+	mvprintw(OFFY + MINSY / 2 + 0, OFFX + MINSX / 2 - 9, "                  ");
+	mvprintw(OFFY + MINSY / 2 + 1, OFFX + MINSX / 2 - 9, "                  ");
+	mvprintw(OFFY + MINSY / 2 + 2, OFFX + MINSX / 2 - 9, "                  ");
+	mvprintw(OFFY + MINSY / 2 + 3, OFFX + MINSX / 2 - 9, "                  ");
+	mvaddch(OFFY + MINSY / 2 - 2, OFFX + MINSX / 2 - 8, ACS_ULCORNER);
+	mvhline(OFFY + MINSY / 2 - 2, OFFX + MINSX / 2 - 7, ACS_HLINE, 14);
+	mvaddch(OFFY + MINSY / 2 - 2, OFFX + MINSX / 2 + 7, ACS_URCORNER);
+	mvaddch(OFFY + MINSY / 2 + 2, OFFX + MINSX / 2 - 8, ACS_LLCORNER);
+	mvhline(OFFY + MINSY / 2 + 2, OFFX + MINSX / 2 - 7, ACS_HLINE, 14);
+	mvaddch(OFFY + MINSY / 2 + 2, OFFX + MINSX / 2 + 7, ACS_LRCORNER);
+	mvvline(OFFY + MINSY / 2 - 1, OFFX + MINSX / 2 - 8, ACS_VLINE, 3);
+	mvvline(OFFY + MINSY / 2 - 1, OFFX + MINSX / 2 + 7, ACS_VLINE, 3);
 }

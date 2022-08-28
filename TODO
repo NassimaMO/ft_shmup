@@ -40,7 +40,7 @@ kill_enemy();
 kill_player();
 //kill_bullet();
 
-spawn_bullet();
+//spawn_bullet();
 
 //enemies_colision();
 //player_colision();

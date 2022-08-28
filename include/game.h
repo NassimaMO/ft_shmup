@@ -47,7 +47,8 @@ struct s_game
 t_game	*init_game(void);
 void	free_game(t_game *game);
 void	draw_scene(t_game *game);
-void	draw_pause(void);
+void	draw_pause(t_game *game);
+void	draw_game_over(t_game *game);
 
 void	rotate_player(t_game *game, int dir);
 
@@ -55,5 +56,12 @@ void	kill_bullet(t_game *game, t_bullet *bullet);
 
 void	gen_enemy_dir(t_enemy *enemy);
 void colision(t_game *game);
+void    spawn_bullet(t_game *game, int p);
+void    enemies_attack(t_game *game);
+int    colision_enemies(t_game *game);
+int colision_bullets(t_game *game);
+void	move_player(t_game *game);
+void	move_bullets(t_game *game);
+void	move_enemies(t_game *game);
 
 #endif
